@@ -14,8 +14,17 @@
 
 RCT_EXPORT_MODULE()
 
+NSTimer *timer = nil;
+
 RCT_EXPORT_METHOD(startPing:(nonnull NSNumber *) interval) {
-    [NSTimer scheduledTimerWithTimeInterval: [interval doubleValue] target: self selector:@selector(ping:) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval: [interval doubleValue] target: self selector:@selector(ping:) userInfo:nil repeats:YES];
+}
+
+RCT_EXPORT_METHOD(stopPing) {
+    if(timer != nil && [timer isValid]) {
+        [timer invalidate];
+        timer = nil;
+    }
 }
 
 - (void) ping:(NSTimer *) timer {
@@ -31,7 +40,13 @@ RCT_EXPORT_METHOD(startPing:(nonnull NSNumber *) interval) {
     
     bool isAvailable = success && (flags & kSCNetworkFlagsReachable) &&
     !(flags & kSCNetworkFlagsConnectionRequired);
-    [self sendEventWithName:@"pingPong" body:isAvailable ? @YES : @NO];
+
+    NSDictionary *data = @{@"connected": isAvailable ? @YES : @NO};
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if([self bridge] != nil) {
+            [self sendEventWithName:@"pingPong" body:data];
+        }
+    });
 }
 
 - (NSArray<NSString *> *)supportedEvents {
