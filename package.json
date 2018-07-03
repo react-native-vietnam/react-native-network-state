@@ -1,0 +1,19 @@
+{
+  "name": "react-native-network-state",
+  "version": "1.0.0",
+  "description": "Allow you to check network status",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-vietnam",
+    "network-state"
+  ],
+  "author": "anhtuank7c@hotmail.com (Anh Tuan Nguyen)",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  }
+}
