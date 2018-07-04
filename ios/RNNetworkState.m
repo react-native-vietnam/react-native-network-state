@@ -19,11 +19,7 @@ RCT_EXPORT_MODULE()
 NSTimer *timer = nil;
 
 RCT_EXPORT_METHOD(startPing:(nonnull NSNumber *) interval) {
-    if(hasListeners) {
-        timer = [NSTimer scheduledTimerWithTimeInterval: [interval doubleValue] target: self selector:@selector(ping:) userInfo:nil repeats:YES];
-    } else {
-        [self stopPing];
-    }
+    timer = [NSTimer scheduledTimerWithTimeInterval: [interval doubleValue] target: self selector:@selector(ping:) userInfo:nil repeats:YES];
 }
 
 RCT_EXPORT_METHOD(stopPing) {
@@ -48,7 +44,7 @@ RCT_EXPORT_METHOD(stopPing) {
     !(flags & kSCNetworkFlagsConnectionRequired);
 
     NSDictionary *data = @{@"connected": isAvailable ? @YES : @NO};
-    if([self bridge] != nil) {
+    if([self bridge] != nil && hasListeners) {
         [self sendEventWithName:@"pingPong" body:data];
     }
 }
