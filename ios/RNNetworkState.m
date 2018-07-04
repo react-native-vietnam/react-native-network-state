@@ -1,7 +1,9 @@
 
 #import "RNNetworkState.h"
 
-@implementation RNNetworkState
+@implementation RNNetworkState {
+    BOOL hasListeners;
+}
 
 - (dispatch_queue_t)methodQueue
 {
@@ -17,14 +19,18 @@ RCT_EXPORT_MODULE()
 NSTimer *timer = nil;
 
 RCT_EXPORT_METHOD(startPing:(nonnull NSNumber *) interval) {
-    timer = [NSTimer scheduledTimerWithTimeInterval: [interval doubleValue] target: self selector:@selector(ping:) userInfo:nil repeats:YES];
+    if(hasListeners) {
+        timer = [NSTimer scheduledTimerWithTimeInterval: [interval doubleValue] target: self selector:@selector(ping:) userInfo:nil repeats:YES];
+    } else {
+        [self stopPing];
+    }
 }
 
 RCT_EXPORT_METHOD(stopPing) {
-    if(timer != nil && [timer isValid]) {
+    if([timer isValid]) {
         [timer invalidate];
-        timer = nil;
     }
+    timer = nil;
 }
 
 - (void) ping:(NSTimer *) timer {
@@ -42,15 +48,21 @@ RCT_EXPORT_METHOD(stopPing) {
     !(flags & kSCNetworkFlagsConnectionRequired);
 
     NSDictionary *data = @{@"connected": isAvailable ? @YES : @NO};
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if([self bridge] != nil) {
-            [self sendEventWithName:@"pingPong" body:data];
-        }
-    });
+    if([self bridge] != nil) {
+        [self sendEventWithName:@"pingPong" body:data];
+    }
 }
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[@"pingPong"];
 }
 
+- (void)startObserving {
+    hasListeners = YES;
+}
+
+- (void)stopObserving {
+    hasListeners = NO;
+    [self stopPing];
+}
 @end
