@@ -8,9 +8,9 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = ""
   s.license      = "MIT"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-  s.author             = { "author" => "author@domain.cn" }
-  s.platform     = :ios, "7.0"
+  s.license      = { :type => "MIT", :file => "LICENSE" }
+  s.author             = { "author" => "anhtuank7c@hotmail.com" }
+  s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/author/RNNetworkState.git", :tag => "master" }
   s.source_files  = "RNNetworkState/**/*.{h,m}"
   s.requires_arc = true
@@ -20,5 +20,3 @@ Pod::Spec.new do |s|
   #s.dependency "others"
 
 end
-
-  
