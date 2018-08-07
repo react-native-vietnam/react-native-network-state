@@ -2,9 +2,9 @@
 
 ## Features
 
-[x] Detect network connection instancely
-[x] Support `onConnected`, `onDisconnected` callback
-[x] Highly customizable UI
+- [x] Detect network connection instancely
+- [x] Support `onConnected`, `onDisconnected` callback
+- [x] Highly customizable UI
 
 ## Getting started
 
