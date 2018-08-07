@@ -1,5 +1,11 @@
 # react-native-network-state
 
+## Features
+
+[x] Detect network connection instancely
+[x] Support `onConnected`, `onDisconnected` callback
+[x] Highly customizable UI
+
 ## Getting started
 
 `$ npm install react-native-network-state --save`
@@ -12,7 +18,7 @@
 
 #### iOS
 
-1.  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
+1.  In XCode, in the project navigator, right-click `Libraries` ➜ `Add Files to [your project's name]`
 2.  Go to `node_modules` ➜ `react-native-network-state` and add `RNNetworkState.xcodeproj`
 3.  In XCode, in the project navigator, select your project. Add `libRNNetworkState.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4.  Run your project (`Cmd+R`)<
@@ -30,17 +36,54 @@
     project(':react-native-network-state').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-network-state/android')
     ```
 3.  Insert the following lines inside the dependencies block in `android/app/build.gradle`:
+
     ```
       compile project(':react-native-network-state')
+    ```
+
+### Extra setup (Required)
+
+#### iOS
+
+1.  Create and paste these line into `ios/Podfile`
+
+        ```
+            source 'https://github.com/CocoaPods/Specs.git'
+            platform :ios, '9.0'
+            target 'TargetName' do
+                pod 'AFNetworking', '~> 3.0' //This line
+            end
+        ````
+
+2.  Run `pod install` or `pod update`
+
+#### Android
+
+1.  Insert these lines to `AndroidManifest.xml`
+
+    ```
+    // ask permissions
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application ...>
+        ...
+        // these lines
+        <receiver android:name="com.reactnativevietnam.NetworkReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+    </application>
     ```
 
 ## Usage
 
 ```javascript
-import RNNetworkState from 'react-native-network-state';
+import RNNetworkState from "react-native-network-state"
 
 // TODO: What to do with the module?
-RNNetworkState;
+RNNetworkState
 ```
 
 ## LICENSE

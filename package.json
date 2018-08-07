@@ -9,12 +9,18 @@
   "keywords": [
     "react-native",
     "react-native-vietnam",
-    "network-state"
+    "react-native-network-state",
+    "agiletechvn",
+    "anhtuank7c"
   ],
   "author": "anhtuank7c@hotmail.com (Anh Tuan Nguyen)",
   "license": "MIT",
   "peerDependencies": {
-    "react-native": "^0.41.2",
-    "prop-types": "15.6.2"
+    "react": ">= 16.4.1",
+    "react-native": ">= 0.55.4",
+    "fbjs": "*"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
   }
 }

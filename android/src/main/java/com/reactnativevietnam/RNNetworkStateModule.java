@@ -1,5 +1,5 @@
 
-package com.reactnativevietnam.networkstate;
+package com.reactnativevietnam;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -30,6 +30,10 @@ public class RNNetworkStateModule extends ReactContextBaseJavaModule {
         @Override
         public void run() {
           Log.d("Handlers", "Called on main thread");
+          ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+          NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+          boolean isConnected = activeNetwork != null &&
+                                activeNetwork.isConnectedOrConnecting();
           handler!!.postDelayed(runnable, 2000);
         }
     };

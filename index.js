@@ -1,115 +1,121 @@
-import React from 'react';
-import PropType from 'prop-types';
+//@flow
+
+import React from "react"
 import {
   View,
   Text,
-  StyleSheet,
-  LayoutAnimation,
-  UIManager,
-  NativeModules,
-  NativeEventEmitter
-} from 'react-native';
-import I18n from 'react-native-i18n';
-
-UIManager.setLayoutAnimationEnabledExperimental &&
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-const { RNNetworkState } = NativeModules;
-const NetworkEventEmitter = new NativeEventEmitter(RNNetworkState);
+  TouchableOpacity,
+  DeviceEventEmitter,
+  ViewProperties,
+  StyleSheet
+} from "react-native"
 
 type Props = {
-  onDisconnected: Function,
-  onConnected: Function,
-  connectedText: String,
-  disconnectedText: String,
-  interval: Number, //second
-  delayHide: Number //second,
-  disconnectedStyle: Object,
-  connectedStyle: Object,
-};
+  debound?: number,
+  txtConnected?: string,
+  txtDisconnected?: string,
+  styleConnected?: Object | Number,
+  styleDisconnected?: Object | Number,
+  onConnected?: Function,
+  onDisconnected?: Function,
+  ...ViewProperties
+}
+
+type State = {
+  isConnected: boolean,
+  type: string,
+  isFast: boolean,
+  visible: boolean
+}
+type NetworkData = {
+  isConnected: boolean,
+  type: string,
+  isFast: boolean
+}
 export default class NetworkState extends React.PureComponent<Props> {
   static defaultProps = {
-    onDisconnected: undefined,
-    onConnected: undefined,
-    connectedText: 'Connected',
-    disconnectedText: 'No internet connection',
-    interval: 3, //second
-    delayHide: 2 //second,
-    disconnectedStyle: {},
-    connectedStyle: {}
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isConnected: true,
-      hide: true
-    };
-    this.pingPongSubcription = NetworkEventEmitter.addListener('pingPong', this.onConnectionChange);
-    if(this.props.interval <= 0) {
-      throw Error('interval must greater than 0 second');
-    }
-    if (this.props.delayHide < 0) {
-      throw Error('delayHide must equal or greater than 0 second');
-    }
+    debound: 1500,
+    txtConnected: "Connected",
+    txtDisconnected: "No Internet Connection",
+    onConnected: () => {},
+    onDisconnected: () => {}
   }
 
-  componentDidMount() {
-    RNNetworkState.startPing(this.props.interval);
+  state: State = {
+    visible: false,
+    isConnected: true,
+    type: "wifi",
+    isFast: true
   }
 
-  componentWillUnmount() {
-    RNNetworkState.stopPing();
-    this.pingPongSubcription.remove();
-  }
+  _TIMEOUT = null
 
-  onConnectionChange = ({ connected }) => {
-    if (connected === this.state.isConnected) {
-      return;
-    }
+  constructor(props: Props) {
+    super(props)
 
-    // callback function
-    const { onConnected, onDisconnected, delayHide } = this.props;
-
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ isConnected: connected, hide: false });
-    if (connected) {
-      onConnected && onConnected();
-      this.timeout && clearTimeout(this.timeout);
-      if (delayHide === 0) {
-        this.setState({ hide: true });
-      } else {
-        this.timeout = setTimeout(() => {
-          this.setState({ hide: true });
-        }, (delayHide * 1000));
+    const { onConnected, onDisconnected } = this.props
+    DeviceEventEmitter.addListener("networkChanged", (data: NetworkData) => {
+      if (this.state.isConnected !== data.isConnected) {
+        data.isConnected ? onConnected(data) : onDisconnected(data)
+        this.setState({ ...data, visible: true })
       }
-      return;
-    }
-    onDisconnected && onDisconnected();
-  };
+    })
+  }
 
   render() {
-    const { connectedStyle, disconnectedStyle } = this.props;
+    const {
+      txtConnected,
+      txtDisconnected,
+      styleConnected,
+      styleDisconnected,
+      debound,
+      ...viewProps
+    } = this.props
+
+    if (this.state.visible && this.state.isConnected) {
+      this._TIMEOUT && clearTimeout(this._TIMEOUT)
+      this._TIMEOUT = setTimeout(() => {
+        this.setState({ visible: false })
+      }, debound)
+    }
+    if (!this.state.visible) {
+      return <View />
+    }
     return (
-      <View
-        style={[
-          this.state.isConnected
-            ? { backgroundColor: '#8BC34A', ...connectedStyle }
-            : { backgroundColor: '#FDAE3A', ...disconnectedStyle },
-          this.state.hide ? { height: 0 } : { height: 'auto' }
-        ]}
-      >
-        <Text style={styles.connectionText}>
-          {this.state.isConnected ? this.props.connectedText : this.props.disconnectedText}
+      <View style={styles.container} {...viewProps}>
+        <Text
+          style={[
+            this.state.isConnected ? styles.txtSuccess : styles.txtError,
+            this.state.isConnected && styleConnected && styleConnected,
+            !this.state.isConnected && styleDisconnected && styleDisconnected
+          ]}
+        >
+          {this.state.isConnected
+            ? txtConnected || "Connected"
+            : txtDisconnected || "No Internet Connection"}
         </Text>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
-  connectionText: {
-    alignSelf: 'center',
-    color: '#fff',
-    paddingVertical: 3
+  container: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0
+  },
+  txtSuccess: {
+    paddingVertical: 5,
+    color: "#fff",
+    backgroundColor: "#4caf50",
+    textAlign: "center"
+  },
+  txtError: {
+    paddingVertical: 5,
+    color: "#fff",
+    backgroundColor: "#f44336",
+    textAlign: "center"
   }
-});
+})

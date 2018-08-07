@@ -35,6 +35,7 @@ project.xcworkspace
 #
 build/
 .idea
+.vscode
 .gradle
 local.properties
 *.iml
@@ -43,4 +44,4 @@ local.properties
 buck-out/
 \.buckd/
 *.keystore
-      
+example/
