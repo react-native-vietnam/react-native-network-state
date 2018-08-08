@@ -3,6 +3,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
       android:name=".MainApplication"
@@ -21,6 +23,14 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <receiver android:name="com.reactnativevietnam.NetworkReceiver" >
+        <intent-filter>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        </intent-filter>
+      </receiver>
+
+      <!-- FIX 18:9 screen ratio -->
+      <meta-data android:name="android.max_aspect" android:value="2.1" />
     </application>
 
 </manifest>

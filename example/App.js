@@ -6,7 +6,7 @@
 
 import React, { Component } from "react"
 import { Platform, StyleSheet, Text, View } from "react-native"
-import NetworkState from "react-native-network-status"
+import NetworkState from "react-native-network-state"
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",

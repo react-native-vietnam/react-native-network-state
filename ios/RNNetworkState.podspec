@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/react-native-vietnam/react-native-network-state.git", :tag => "master" }
   s.source_files  = "RNNetworkState/**/*.{h,m}"
+  s.frameworks    = 'Reachability', 'SystemConfiguration'
   s.requires_arc = true
 
   s.dependency "React"

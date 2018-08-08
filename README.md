@@ -10,18 +10,47 @@
 
 `$ npm install react-native-network-state --save`
 
-### Mostly automatic installation
-
-`$ react-native link react-native-network-state`
-
 ### Manual installation
 
 #### iOS
 
-1.  In XCode, in the project navigator, right-click `Libraries` ➜ `Add Files to [your project's name]`
-2.  Go to `node_modules` ➜ `react-native-network-state` and add `RNNetworkState.xcodeproj`
-3.  In XCode, in the project navigator, select your project. Add `libRNNetworkState.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4.  Run your project (`Cmd+R`)<
+1.  `cd ios && pod init`
+2.  Paste these line to your `Podfile`
+
+```
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'example' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Paste these lines
+  pod 'Reachability', '3.2'
+  pod 'RNNetworkState', path: '../node_modules/react-native-network-state/ios'
+
+  target 'example-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'exampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+```
+
+3.  Run `pod install`
+4.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow:
+
+    <p>1.1</p>
+
+    <img src="https://image.prntscr.com/image/-HO3fqNmSfK9QbAW1Ti1gA.png" width="320"><br/>
+
+    <p>1.2</p>
+    <img src="https://image.prntscr.com/image/UTYP9HT1QUSrLfTaDHEFJg.png" width="320">
 
 #### Android
 
@@ -41,22 +70,7 @@
       compile project(':react-native-network-state')
     ```
 
-### Extra setup (Required, Very Important)
-
-#### iOS
-
-1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow:
-
-    <p>1.1</p>
-
-    <img src="https://image.prntscr.com/image/-HO3fqNmSfK9QbAW1Ti1gA.png" width="320"><br/>
-
-    <p>1.2</p>
-    <img src="https://image.prntscr.com/image/UTYP9HT1QUSrLfTaDHEFJg.png" width="320">
-
-#### Android
-
-1.  Insert these lines to `AndroidManifest.xml`
+4.  Insert these lines to `AndroidManifest.xml`
 
     ```
     // ask permissions
