@@ -6,6 +6,10 @@
 - [x] Support `onConnected`, `onDisconnected` callback
 - [x] Highly customizable UI
 
+## Demo
+
+- <img src="https://media.giphy.com/media/8FrypHU22FFYF52s7x/giphy.gif" width="480" />
+
 ## Getting started
 
 `$ npm install react-native-network-state --save`

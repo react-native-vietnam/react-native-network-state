@@ -9,7 +9,8 @@ import {
   ViewProperties,
   StyleSheet,
   NativeModules,
-  NativeEventEmitter
+  NativeEventEmitter,
+  Platform
 } from "react-native"
 
 type Props = {
@@ -44,8 +45,8 @@ export default class NetworkState extends React.PureComponent<Props> {
     debound: 1500,
     txtConnected: "Connected",
     txtDisconnected: "No Internet Connection",
-    onConnected: () => {},
-    onDisconnected: () => {}
+    onConnected: () => { },
+    onDisconnected: () => { }
   }
 
   state: State = {
@@ -119,7 +120,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    right: 0
+    right: 0,
+    ...Platform.select({
+      ios: {
+        marginTop: 20
+      }
+    })
   },
   txtSuccess: {
     paddingVertical: 5,
