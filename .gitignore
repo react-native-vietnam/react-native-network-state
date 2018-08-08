@@ -45,3 +45,4 @@ buck-out/
 \.buckd/
 *.keystore
 local_example/
+.vscode
