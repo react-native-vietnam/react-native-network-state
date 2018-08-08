@@ -20,10 +20,12 @@ or
 
 ### Manual installation
 
-#### iOS
+#### iOS (Install via Cocoapods is not supported righ now)
 
-1.  blabla
-2.  Continue write
+1.  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
+2.  Go to `node_modules` ➜ `react-native-network-state` and add `RNNetworkState.xcodeproj`
+3.  In XCode, in the project navigator, select your project. Add `libRNNetworkState.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
+4.  Run your project (`Cmd+R`)<
 
 #### Android
 
