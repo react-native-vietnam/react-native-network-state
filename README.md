@@ -1,5 +1,7 @@
 # react-native-network-state
 
+[![NPM](https://nodei.co/npm/react-native-network-state.png)](https://nodei.co/npm/react-native-network-state/)
+
 ## Features
 
 - [x] Detect network connection instancely
