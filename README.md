@@ -41,21 +41,11 @@
       compile project(':react-native-network-state')
     ```
 
-### Extra setup (Required)
+### Extra setup (Required, Very Important)
 
 #### iOS
 
-1.  Create and paste these line into `ios/Podfile`
-
-        ```
-            source 'https://github.com/CocoaPods/Specs.git'
-            platform :ios, '9.0'
-            target 'TargetName' do
-                pod 'AFNetworking', '~> 3.0' //This line
-            end
-        ````
-
-2.  Run `pod install` or `pod update`
+1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow
 
 #### Android
 
@@ -80,10 +70,20 @@
 ## Usage
 
 ```javascript
-import RNNetworkState from "react-native-network-state"
+import React from "react"
+import NetworkState from "react-native-network-state"
+import { View, Text } from "react-native"
 
-// TODO: What to do with the module?
-RNNetworkState
+export default class YourView extends React.PureComponent {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>This is Your View</Text>
+        <NetworkState />
+      </View>
+    )
+  }
+}
 ```
 
 ## LICENSE

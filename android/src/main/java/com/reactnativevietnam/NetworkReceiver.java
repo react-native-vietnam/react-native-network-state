@@ -7,6 +7,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+/**
+ * @author Anh Tuan Nguyen
+ * @created 8/8/2018
+ */
 public class NetworkReceiver extends BroadcastReceiver {
 
     private static boolean isConnectionFast(int type, int subType) {
@@ -62,7 +66,7 @@ public class NetworkReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = manager.getActiveNetworkInfo();
-        Intent i = new Intent("RNNetworkState");
+        Intent i = new Intent("RNNetworkStatus");
         if (netInfo != null && netInfo.isConnected() && netInfo.isAvailable()) {
             Boolean isFast = NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype());
             i.putExtra("isConnected", true);

@@ -12,13 +12,17 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+/**
+ * @author Anh Tuan Nguyen
+ * @created 8/8/2018
+ */
 public class RNNetwork extends ReactContextBaseJavaModule {
     private ReactApplicationContext mReactContext = null;
 
     public RNNetwork(ReactApplicationContext reactContext) {
         super(reactContext);
         mReactContext = reactContext;
-        IntentFilter intentFilter = new IntentFilter("RNNetworkState");
+        IntentFilter intentFilter = new IntentFilter("RNNetworkStatus");
         if (mReactContext != null) {
             mReactContext.registerReceiver(new BroadcastReceiver() {
                 @Override
@@ -39,7 +43,7 @@ public class RNNetwork extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "RNNetworkState";
+        return "RNNetworkStatus";
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {

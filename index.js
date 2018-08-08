@@ -5,9 +5,12 @@ import {
   View,
   Text,
   TouchableOpacity,
+  NetInfo,
   DeviceEventEmitter,
   ViewProperties,
-  StyleSheet
+  StyleSheet,
+  NativeModules,
+  NativeEventEmitter
 } from "react-native"
 
 type Props = {
@@ -18,6 +21,7 @@ type Props = {
   styleDisconnected?: Object | Number,
   onConnected?: Function,
   onDisconnected?: Function,
+  component?: React.Element,
   ...ViewProperties
 }
 
@@ -32,6 +36,11 @@ type NetworkData = {
   type: string,
   isFast: boolean
 }
+
+const RNNetworkStatusEventEmitter = new NativeEventEmitter(
+  NativeModules.RNNetworkStatus
+)
+
 export default class NetworkState extends React.PureComponent<Props> {
   static defaultProps = {
     debound: 1500,
@@ -54,12 +63,19 @@ export default class NetworkState extends React.PureComponent<Props> {
     super(props)
 
     const { onConnected, onDisconnected } = this.props
-    DeviceEventEmitter.addListener("networkChanged", (data: NetworkData) => {
-      if (this.state.isConnected !== data.isConnected) {
-        data.isConnected ? onConnected(data) : onDisconnected(data)
-        this.setState({ ...data, visible: true })
+    this._listener = RNNetworkStatusEventEmitter.addListener(
+      "networkChanged",
+      (data: NetworkData) => {
+        if (this.state.isConnected !== data.isConnected) {
+          data.isConnected ? onConnected(data) : onDisconnected(data)
+          this.setState({ ...data, visible: true })
+        }
       }
-    })
+    )
+  }
+
+  componentWillUnmount() {
+    this._listener()
   }
 
   render() {
