@@ -45,7 +45,14 @@
 
 #### iOS
 
-1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow
+1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow:
+
+    <p>1.1</p>
+
+    <img src="https://image.prntscr.com/image/-HO3fqNmSfK9QbAW1Ti1gA.png" width="320"><br/>
+
+    <p>1.2</p>
+    <img src="https://image.prntscr.com/image/UTYP9HT1QUSrLfTaDHEFJg.png" width="320">
 
 #### Android
 
@@ -58,12 +65,15 @@
 
     <application ...>
         ...
-        // these lines
+        // insert these lines
         <receiver android:name="com.reactnativevietnam.NetworkReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <!-- FIX 18:9 screen ratio -->
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
     </application>
     ```
 
@@ -71,7 +81,7 @@
 
 ```javascript
 import React from "react"
-import NetworkState from "react-native-network-state"
+import NetworkState from "react-native-network-status"
 import { View, Text } from "react-native"
 
 export default class YourView extends React.PureComponent {
