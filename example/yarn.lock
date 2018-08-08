@@ -4181,7 +4181,7 @@ react-is@^16.3.1:
 
 "react-native-network-state@https://github.com/react-native-vietnam/react-native-network-state.git":
   version "1.0.0"
-  resolved "https://github.com/react-native-vietnam/react-native-network-state.git#73be37a723405fd8d41efb8e7210a4df65dd48a7"
+  resolved "https://github.com/react-native-vietnam/react-native-network-state.git#4bb0e08ce4a68ed20b48b65fd66f531940b45474"
 
 react-native@0.55.4:
   version "0.55.4"

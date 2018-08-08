@@ -40,6 +40,15 @@ target 'example' do
   end
 
 end
+
+# Paste these lines at very bottom of Podfile
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if target.name == "React"
+          target.remove_from_project
+        end
+    end
+end
 ```
 
 3.  Run `pod install`
