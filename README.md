@@ -10,56 +10,20 @@
 
 `$ npm install react-native-network-state --save`
 
+or
+
+`$ yarn add react-native-network-state`
+
+### Automatic installation
+
+`$ react-native link react-native-network-state`
+
 ### Manual installation
 
 #### iOS
 
-1.  `cd ios && pod init`
-2.  Paste these line to your `Podfile`
-
-```
-# Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
-
-target 'example' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
-
-  # Paste these lines
-  pod 'Reachability', '3.2'
-  pod 'RNNetworkState', path: '../node_modules/react-native-network-state/ios'
-
-  target 'example-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'exampleTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end
-
-# Paste these lines at very bottom of Podfile
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        if target.name == "React"
-          target.remove_from_project
-        end
-    end
-end
-```
-
-3.  Run `pod install`
-4.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow:
-
-    <p>1.1</p>
-
-    <img src="https://image.prntscr.com/image/-HO3fqNmSfK9QbAW1Ti1gA.png" width="320"><br/>
-
-    <p>1.2</p>
-    <img src="https://image.prntscr.com/image/UTYP9HT1QUSrLfTaDHEFJg.png" width="320">
+1.  blabla
+2.  Continue write
 
 #### Android
 
@@ -79,7 +43,22 @@ end
       compile project(':react-native-network-state')
     ```
 
-4.  Insert these lines to `AndroidManifest.xml`
+### Extra setup (Very important)
+
+#### iOS
+
+1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow:
+
+    <p>1.1</p>
+
+    <img src="https://image.prntscr.com/image/-HO3fqNmSfK9QbAW1Ti1gA.png" width="320"><br/>
+
+    <p>1.2</p>
+    <img src="https://image.prntscr.com/image/UTYP9HT1QUSrLfTaDHEFJg.png" width="320">
+
+#### Android
+
+1.  Insert these lines to `AndroidManifest.xml`
 
     ```
     // ask permissions

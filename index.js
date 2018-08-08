@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   NetInfo,
-  DeviceEventEmitter,
   ViewProperties,
   StyleSheet,
   NativeModules,
@@ -52,11 +51,12 @@ export default class NetworkState extends React.PureComponent<Props> {
   state: State = {
     visible: false,
     isConnected: true,
-    type: "wifi",
+    type: "unknown",
     isFast: true
   }
 
   _TIMEOUT = null
+  _listener: any = null
 
   constructor(props: Props) {
     super(props)
@@ -74,7 +74,7 @@ export default class NetworkState extends React.PureComponent<Props> {
   }
 
   componentWillUnmount() {
-    this._listener()
+    this._listener.remove()
   }
 
   render() {
