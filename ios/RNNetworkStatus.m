@@ -5,10 +5,10 @@
 //  Copyright © 2018 ReactNativeVietnam. All rights reserved.
 //
 
-#import "RNNetworkState.h"
+#import "RNNetworkStatus.h"
 #import "Reachability.h"
 
-@implementation RNNetworkState {
+@implementation RNNetworkStatus {
   Reachability* reach;
   BOOL hasListener;
   NetworkStatus prevStatus;

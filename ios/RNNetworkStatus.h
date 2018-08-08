@@ -8,6 +8,6 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 
-@interface RNNetworkState : RCTEventEmitter<RCTBridgeModule>
+@interface RNNetworkStatus : RCTEventEmitter<RCTBridgeModule>
 
 @end
