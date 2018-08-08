@@ -35,8 +35,8 @@ type NetworkData = {
   isFast: boolean
 }
 
-const RNNetworkStatusEventEmitter = new NativeEventEmitter(
-  NativeModules.RNNetworkStatus
+const RNNetworkStateEventEmitter = new NativeEventEmitter(
+  NativeModules.RNNetworkState
 )
 
 export default class NetworkState extends React.PureComponent<Props> {
@@ -62,7 +62,7 @@ export default class NetworkState extends React.PureComponent<Props> {
     super(props)
 
     const { onConnected, onDisconnected } = this.props
-    this._listener = RNNetworkStatusEventEmitter.addListener(
+    this._listener = RNNetworkStateEventEmitter.addListener(
       "networkChanged",
       (data: NetworkData) => {
         if (this.state.isConnected !== data.isConnected) {
