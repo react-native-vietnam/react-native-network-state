@@ -83,6 +83,8 @@ or
 
 ## Usage
 
+Please see `example` project
+
 ```javascript
 import React from "react"
 import NetworkState from "react-native-network-state"
