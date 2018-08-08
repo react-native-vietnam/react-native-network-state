@@ -16,13 +16,13 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
  * @author Anh Tuan Nguyen
  * @created 8/8/2018
  */
-public class RNNetwork extends ReactContextBaseJavaModule {
+public class RNNetworkModule extends ReactContextBaseJavaModule {
     private ReactApplicationContext mReactContext = null;
 
-    public RNNetwork(ReactApplicationContext reactContext) {
+    public RNNetworkModule(ReactApplicationContext reactContext) {
         super(reactContext);
         mReactContext = reactContext;
-        IntentFilter intentFilter = new IntentFilter("RNNetworkStatus");
+        IntentFilter intentFilter = new IntentFilter("RNNetworkState");
         if (mReactContext != null) {
             mReactContext.registerReceiver(new BroadcastReceiver() {
                 @Override
@@ -43,7 +43,7 @@ public class RNNetwork extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "RNNetworkStatus";
+        return "RNNetworkState";
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {

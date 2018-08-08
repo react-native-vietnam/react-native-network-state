@@ -81,7 +81,7 @@
 
 ```javascript
 import React from "react"
-import NetworkStatus from "react-native-network-status"
+import NetworkState from "react-native-network-state"
 import { View, Text } from "react-native"
 
 export default class YourView extends React.PureComponent {
@@ -89,7 +89,7 @@ export default class YourView extends React.PureComponent {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>This is Your View</Text>
-        <NetworkStatus />
+        <NetworkState />
       </View>
     )
   }

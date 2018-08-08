@@ -14,10 +14,10 @@ import java.util.List;
  * @author Anh Tuan Nguyen
  * @created 8/8/2018
  */
-public class RNNetworkStatePackage implements ReactPackage {
+public class RNNetworkStatusPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new RNNetwork(reactContext));
+        return Arrays.<NativeModule>asList(new RNNetworkModule(reactContext));
     }
 
     @Override

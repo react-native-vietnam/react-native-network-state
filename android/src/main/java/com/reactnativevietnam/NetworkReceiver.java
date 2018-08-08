@@ -66,7 +66,7 @@ public class NetworkReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = manager.getActiveNetworkInfo();
-        Intent i = new Intent("RNNetworkStatus");
+        Intent i = new Intent("RNNetworkState");
         if (netInfo != null && netInfo.isConnected() && netInfo.isAvailable()) {
             Boolean isFast = NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype());
             i.putExtra("isConnected", true);
