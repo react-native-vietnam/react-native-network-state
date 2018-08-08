@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "react": "16.3.1",
-    "react-native": "0.55.4",
-    "react-native-network-state": "https://github.com/react-native-vietnam/react-native-network-state.git"
+    "react-native": "0.55.4"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",

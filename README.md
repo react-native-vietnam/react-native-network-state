@@ -107,7 +107,6 @@ type Props = {
   styleDisconnected?: Object | Number,
   onConnected?: Function,
   onDisconnected?: Function,
-  component?: React.Element,
   ...ViewProperties
 }
 ```
