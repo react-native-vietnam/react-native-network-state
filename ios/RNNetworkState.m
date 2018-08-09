@@ -62,5 +62,27 @@
   }
   [self sendEventWithName:@"networkChanged" body:data];
 }
+- (void) openSetting:(NSURL *) url {
+  [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+}
 RCT_EXPORT_MODULE();
+RCT_EXPORT_METHOD(openGeneral) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=General"]];
+}
+RCT_EXPORT_METHOD(openPrivacy) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=Privacy"]];
+}
+RCT_EXPORT_METHOD(openWifi) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=WIFI"]];
+}
+RCT_EXPORT_METHOD(openAirplaneMode) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=AIRPLANE_MODE"]];
+}
+RCT_EXPORT_METHOD(openLocationSource) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=AIRPLANE_MODE"]];
+}
+RCT_EXPORT_METHOD(openWireless) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=MOBILE_DATA_SETTINGS_ID"]];
+}
+
 @end

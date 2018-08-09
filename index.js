@@ -14,6 +14,7 @@ import {
 } from "react-native"
 
 type Props = {
+  visible?: boolean,
   debound?: number,
   txtConnected?: string,
   txtDisconnected?: string,
@@ -28,7 +29,7 @@ type State = {
   isConnected: boolean,
   type: string,
   isFast: boolean,
-  visible: boolean
+  hidden: boolean
 }
 type NetworkData = {
   isConnected: boolean,
@@ -42,15 +43,16 @@ const RNNetworkStateEventEmitter = new NativeEventEmitter(
 
 export default class NetworkState extends React.PureComponent<Props> {
   static defaultProps = {
+    visible: true,
     debound: 1500,
     txtConnected: "Connected",
     txtDisconnected: "No Internet Connection",
-    onConnected: () => { },
-    onDisconnected: () => { }
+    onConnected: () => {},
+    onDisconnected: () => {}
   }
 
   state: State = {
-    visible: false,
+    hidden: true,
     isConnected: true,
     type: "unknown",
     isFast: true
@@ -68,7 +70,7 @@ export default class NetworkState extends React.PureComponent<Props> {
       (data: NetworkData) => {
         if (this.state.isConnected !== data.isConnected) {
           data.isConnected ? onConnected(data) : onDisconnected(data)
-          this.setState({ ...data, visible: true })
+          this.setState({ ...data, hidden: false })
         }
       }
     )
@@ -85,16 +87,17 @@ export default class NetworkState extends React.PureComponent<Props> {
       styleConnected,
       styleDisconnected,
       debound,
+      visible,
       ...viewProps
     } = this.props
 
     if (this.state.visible && this.state.isConnected) {
       this._TIMEOUT && clearTimeout(this._TIMEOUT)
       this._TIMEOUT = setTimeout(() => {
-        this.setState({ visible: false })
+        this.setState({ hidden: true })
       }, debound)
     }
-    if (!this.state.visible) {
+    if (this.state.hidden || !visible) {
       return <View />
     }
     return (
