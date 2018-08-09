@@ -37,9 +37,8 @@ type NetworkData = {
   isFast: boolean
 }
 
-const RNNetworkStateEventEmitter = new NativeEventEmitter(
-  NativeModules.RNNetworkState
-)
+export const Settings = NativeModules.RNNetworkState
+const RNNetworkStateEventEmitter = new NativeEventEmitter(Settings)
 
 export default class NetworkState extends React.PureComponent<Props> {
   static defaultProps = {

@@ -1,6 +1,6 @@
 {
   "name": "react-native-network-state",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Easy control network status in React Native",
   "main": "index.js",
   "scripts": {
