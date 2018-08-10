@@ -171,7 +171,7 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void openSecurity() {
+    public void openPrivacy() {
         Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

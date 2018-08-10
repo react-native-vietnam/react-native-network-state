@@ -78,11 +78,20 @@ RCT_EXPORT_METHOD(openWifi) {
 RCT_EXPORT_METHOD(openAirplaneMode) {
   [self openSetting:[NSURL URLWithString:@"App-prefs:root=AIRPLANE_MODE"]];
 }
-RCT_EXPORT_METHOD(openLocationSource) {
-  [self openSetting:[NSURL URLWithString:@"App-prefs:root=AIRPLANE_MODE"]];
+RCT_EXPORT_METHOD(openNote) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=NOTES"]];
 }
 RCT_EXPORT_METHOD(openWireless) {
   [self openSetting:[NSURL URLWithString:@"App-prefs:root=MOBILE_DATA_SETTINGS_ID"]];
+}
+RCT_EXPORT_METHOD(openiCloud) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=CASTLE"]];
+}
+RCT_EXPORT_METHOD(openNotifications) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=NOTIFICATIONS_ID"]];
+}
+RCT_EXPORT_METHOD(openInputMethod) {
+  [self openSetting:[NSURL URLWithString:@"App-prefs:root=General&path=Keyboard/KEYBOARDS"]];
 }
 
 @end

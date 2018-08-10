@@ -110,7 +110,7 @@ export default class YourView extends React.PureComponent {
 
 ## Props
 
-```
+```javascript
 type Props = {
   debound?: number,
   txtConnected?: string,
@@ -123,9 +123,36 @@ type Props = {
 }
 ```
 
-## Utils
+## Settings Utils
 
-Look into `Settings`
+| Functions           | iOS | Android |
+| ------------------- | :-: | :-----: |
+| openWifi            | [x] |   [x]   |
+| openApn             | [ ] |   [x]   |
+| openBluetooth       | [ ] |   [x]   |
+| openWireless        | [x] |   [x]   |
+| openGeneral         | [x] |   [x]   |
+| openPrivacy         | [x] |   [x]   |
+| openAirplaneMode    | [x] |   [x]   |
+| openiCloud          | [x] |   [ ]   |
+| openNote            | [x] |   [ ]   |
+| openNotifications   | [x] |   [ ]   |
+| openLocale          | [ ] |   [x]   |
+| openDisplay         | [ ] |   [x]   |
+| openInternalStorage | [ ] |   [x]   |
+| openMemoryCard      | [ ] |   [x]   |
+| openAccessibility   | [ ] |   [x]   |
+| openApplication     | [ ] |   [x]   |
+| openDeviceInfo      | [ ] |   [x]   |
+| openInputMethod     | [x] |   [x]   |
+
+```javascript
+//Example: Open wifi setting
+
+import NetworkState, { Settings } from "react-native-network-state"
+
+Settings.openWifi()
+```
 
 ## LICENSE
 
