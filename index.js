@@ -90,7 +90,7 @@ export default class NetworkState extends React.PureComponent<Props> {
       ...viewProps
     } = this.props
 
-    if (this.state.visible && this.state.isConnected) {
+    if (this.props.visible && this.state.isConnected) {
       this._TIMEOUT && clearTimeout(this._TIMEOUT)
       this._TIMEOUT = setTimeout(() => {
         this.setState({ hidden: true })
