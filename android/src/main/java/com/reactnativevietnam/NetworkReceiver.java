@@ -13,7 +13,7 @@ import android.telephony.TelephonyManager;
  */
 public class NetworkReceiver extends BroadcastReceiver {
 
-    private static boolean isConnectionFast(int type, int subType) {
+    public static boolean isConnectionFast(int type, int subType) {
         if (type == ConnectivityManager.TYPE_WIFI) {
             return true;
         } else if (type == ConnectivityManager.TYPE_MOBILE) {

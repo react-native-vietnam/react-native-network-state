@@ -29,14 +29,13 @@ type State = {
   isConnected: boolean,
   type: string,
   isFast: boolean,
-  hidden: boolean
+  shouldVisible: boolean
 }
 type NetworkData = {
   isConnected: boolean,
   type: string,
   isFast: boolean
 }
-
 export const Settings = NativeModules.RNNetworkState
 const RNNetworkStateEventEmitter = new NativeEventEmitter(Settings)
 
@@ -46,15 +45,15 @@ export default class NetworkState extends React.PureComponent<Props> {
     debound: 1500,
     txtConnected: "Connected",
     txtDisconnected: "No Internet Connection",
-    onConnected: () => {},
-    onDisconnected: () => {}
+    onConnected: () => { },
+    onDisconnected: () => { }
   }
 
   state: State = {
-    hidden: true,
-    isConnected: true,
-    type: "unknown",
-    isFast: true
+    shouldVisible: !Settings.isConnected,
+    isConnected: Settings.isConnected,
+    type: Settings.type,
+    isFast: Settings.isFast
   }
 
   _TIMEOUT = null
@@ -64,12 +63,16 @@ export default class NetworkState extends React.PureComponent<Props> {
     super(props)
 
     const { onConnected, onDisconnected } = this.props
+    const { isConnected, type, isFast } = Settings
+    if (!isConnected) {
+      onDisconnected({ isConnected, type, isFast })
+    }
     this._listener = RNNetworkStateEventEmitter.addListener(
       "networkChanged",
       (data: NetworkData) => {
         if (this.state.isConnected !== data.isConnected) {
           data.isConnected ? onConnected(data) : onDisconnected(data)
-          this.setState({ ...data, hidden: false })
+          this.setState({ ...data, shouldVisible: true })
         }
       }
     )
@@ -90,13 +93,13 @@ export default class NetworkState extends React.PureComponent<Props> {
       ...viewProps
     } = this.props
 
-    if (this.state.visible && this.state.isConnected) {
+    if (this.state.shouldVisible && this.state.isConnected) {
       this._TIMEOUT && clearTimeout(this._TIMEOUT)
       this._TIMEOUT = setTimeout(() => {
-        this.setState({ hidden: true })
+        this.setState({ shouldVisible: false })
       }, debound)
     }
-    if (this.state.hidden || !visible) {
+    if (!this.state.shouldVisible || !visible) {
       return <View />
     }
     return (

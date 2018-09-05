@@ -7,6 +7,7 @@
 - [x] Detect network connection instancely
 - [x] Support `onConnected`, `onDisconnected` callback
 - [x] Highly customizable UI
+- [x] Open Wifi setting
 
 ## Demo
 
@@ -123,28 +124,11 @@ type Props = {
 }
 ```
 
-## Settings Utils
+## Settings Utils (iOS bellow 10 can open Wifi setting, equal or greater than 10 will open general settings)
 
-| Functions           | iOS | Android |
-| ------------------- | :-: | :-----: |
-| openWifi            | [x] |   [x]   |
-| openApn             | [ ] |   [x]   |
-| openBluetooth       | [ ] |   [x]   |
-| openWireless        | [x] |   [x]   |
-| openGeneral         | [x] |   [x]   |
-| openPrivacy         | [x] |   [x]   |
-| openAirplaneMode    | [x] |   [x]   |
-| openiCloud          | [x] |   [ ]   |
-| openNote            | [x] |   [ ]   |
-| openNotifications   | [x] |   [ ]   |
-| openLocale          | [ ] |   [x]   |
-| openDisplay         | [ ] |   [x]   |
-| openInternalStorage | [ ] |   [x]   |
-| openMemoryCard      | [ ] |   [x]   |
-| openAccessibility   | [ ] |   [x]   |
-| openApplication     | [ ] |   [x]   |
-| openDeviceInfo      | [ ] |   [x]   |
-| openInputMethod     | [x] |   [x]   |
+| Functions | iOS | Android |
+| --------- | :-: | :-----: |
+| openWifi  | [x] |   [x]   |
 
 ```javascript
 //Example: Open wifi setting

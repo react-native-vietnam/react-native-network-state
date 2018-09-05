@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
-import android.net.Uri;
 import android.provider.Settings;
 
 import com.facebook.react.bridge.ReactMethod;
@@ -14,6 +16,9 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Anh Tuan Nguyen
@@ -50,27 +55,6 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void openGeneral() {
-        Intent intent = new Intent(Settings.ACTION_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openAppDetails() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        intent.setData(Uri.parse("package:" + mReactContext.getPackageName()));
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
     public void openWifi() {
         Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -80,154 +64,21 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
         }
     }
 
-    @ReactMethod
-    public void openLocationSource() {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
+    @Override
+    public Map<String, Object> getConstants() {
+        final Map<String, Object> constants = new HashMap<>();
+        try {
+            ConnectivityManager manager = (ConnectivityManager) getReactApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = manager.getActiveNetworkInfo();
+            Boolean isConnected = netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
+            Boolean isFast = isConnected ? NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype()) : false;
+            constants.put("isFast", isFast);
+            constants.put("type", netInfo.getTypeName());
+            constants.put("isConnected", isConnected );
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    @ReactMethod
-    public void openWireless() {
-        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openAirplaneMode() {
-        Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openApn() {
-        Intent intent = new Intent(Settings.ACTION_APN_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openBluetooth() {
-        Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openDate() {
-        Intent intent = new Intent(Settings.ACTION_DATE_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openLocale() {
-        Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openInputMethod() {
-        Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openDisplay() {
-        Intent intent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openPrivacy() {
-        Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openInternalStorage() {
-        Intent intent = new Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openMemoryCard() {
-        Intent intent = new Intent(Settings.ACTION_MEMORY_CARD_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openAccessibility() {
-        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openApplication() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
-    public void openDeviceInfo() {
-        Intent intent = new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(mReactContext.getPackageManager()) != null) {
-            mReactContext.startActivity(intent);
-        }
+        return constants;
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {
