@@ -71,7 +71,6 @@ RCT_EXPORT_METHOD(openWifi) {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
   }
 }
-RCT_EXPORT_MODULE();
 - (NSDictionary *)constantsToExport {
   NetworkStatus status = [reach currentReachabilityStatus];
   BOOL isConnected = (status == ReachableViaWWAN || status == ReachableViaWiFi);
