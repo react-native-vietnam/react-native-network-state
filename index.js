@@ -45,8 +45,8 @@ export default class NetworkState extends React.PureComponent<Props> {
     debound: 1500,
     txtConnected: "Connected",
     txtDisconnected: "No Internet Connection",
-    onConnected: () => { },
-    onDisconnected: () => { }
+    onConnected: () => {},
+    onDisconnected: () => {}
   }
 
   state: State = {

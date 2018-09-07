@@ -4,3 +4,4 @@ local_example
 .gitignore
 .gitattributes
 dev
+*.keystore
