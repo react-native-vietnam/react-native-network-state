@@ -64,11 +64,9 @@
 }
 RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(openWifi) {
-  NSURL *url = [NSURL URLWithString:@"App-Prefs:root=WIFI"];
+  NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
   if ([[UIApplication sharedApplication] canOpenURL:url]) {
     [[UIApplication sharedApplication] openURL:url];
-  } else {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
   }
 }
 - (NSDictionary *)constantsToExport {
