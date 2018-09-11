@@ -45,8 +45,8 @@ export default class NetworkState extends React.PureComponent<Props> {
     debound: 1500,
     txtConnected: "Connected",
     txtDisconnected: "No Internet Connection",
-    onConnected: null,
-    onDisconnected: null
+    onConnected: () => {},
+    onDisconnected: () => {}
   }
 
   state: State = {
@@ -64,11 +64,7 @@ export default class NetworkState extends React.PureComponent<Props> {
 
     const { onConnected, onDisconnected } = this.props
     const { isConnected, type, isFast } = Settings
-    if (!isConnected) {
-      onDisconnected && onDisconnected({ isConnected, type, isFast })
-    } else {
-      isConnected && onConnected({ isConnected, type, isFast })
-    }
+    isConnected ? onConnected({ isConnected, type, isFast }) : onDisconnected({ isConnected, type, isFast })
 
     this._listener = RNNetworkStateEventEmitter.addListener(
       "networkChanged",
