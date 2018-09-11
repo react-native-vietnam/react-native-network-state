@@ -111,6 +111,16 @@ or
     distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip
     ```
 
+4.  Upgrade compileSdkVersion to `27`, buildToolsVersion to `27.0.3`, targetSdkVersion to 27
+
+5.  Run script fix android module gradle
+
+```
+node node_modules/react-native-network-state/fixAndroid.js
+```
+
+#### Fix Android Gradle
+
 ## Usage
 
 Please see `example` project
