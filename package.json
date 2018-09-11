@@ -21,6 +21,7 @@
     "fbjs": "*"
   },
   "devDependencies": {
+    "eslint-config-rallycoding": "^3.2.0",
     "flow-bin": "^0.78.0"
   }
 }

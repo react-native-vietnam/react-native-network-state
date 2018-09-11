@@ -67,16 +67,16 @@ public class NetworkReceiver extends BroadcastReceiver {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = manager.getActiveNetworkInfo();
         Intent i = new Intent("RNNetworkState");
+        Boolean isFast = netInfo != null ? NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype()) : false;
         if (netInfo != null && netInfo.isConnected() && netInfo.isAvailable()) {
-            Boolean isFast = NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype());
             i.putExtra("isConnected", true);
             i.putExtra("type", netInfo.getTypeName());
             i.putExtra("isFast", isFast);
             context.sendBroadcast(i);
         } else {
             i.putExtra("isConnected", false);
-            i.putExtra("type", "unknown");
-            i.putExtra("isFast", false);
+            i.putExtra("type", netInfo != null ? netInfo.getTypeName() :  "unknown");
+            i.putExtra("isFast", isFast);
             context.sendBroadcast(i);
         }
     }

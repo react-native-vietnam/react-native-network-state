@@ -8,6 +8,7 @@
 - [x] Support `onConnected`, `onDisconnected` callback
 - [x] Highly customizable UI
 - [x] Open Wifi setting
+- [ ] Android 8.0+ => Bug
 
 ## Demo
 
@@ -69,23 +70,45 @@ or
 
 1.  Insert these lines to `AndroidManifest.xml`
 
+        ```
+        // ask permissions
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+        <application ...>
+            ...
+            // insert these lines
+            <receiver android:name="com.reactnativevietnam.NetworkReceiver" >
+                <intent-filter>
+                    <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                </intent-filter>
+            </receiver>
+
+            <!-- FIX 18:9 screen ratio -->
+            <meta-data android:name="android.max_aspect" android:value="2.1" />
+        </application>
+        ```
+
+2.  Upgrade to build tool `3.1.3`:
+
+        ```
+        // android/build.gradle
+
+        buildscript {
+            dependencies {
+                classpath 'com.android.tools.build:gradle:3.1.3' // HERE
+                ...
+            }
+            ...
+        }
+        ```
+
+3.  Upgrade gradle to `4.4`
+
     ```
-    // ask permissions
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    // android/gradle/wrapper/gradle-wrapper.properties
 
-    <application ...>
-        ...
-        // insert these lines
-        <receiver android:name="com.reactnativevietnam.NetworkReceiver" >
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
-        <!-- FIX 18:9 screen ratio -->
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
-    </application>
+    distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip
     ```
 
 ## Usage
@@ -93,14 +116,14 @@ or
 Please see `example` project
 
 ```javascript
-import React from "react"
-import NetworkState, { Settings } from "react-native-network-state"
-import { View, Text } from "react-native"
+import React from 'react'
+import NetworkState, { Settings } from 'react-native-network-state'
+import { View, Text } from 'react-native'
 
 export default class YourView extends React.PureComponent {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>This is Your View</Text>
         <NetworkState onDisconnected={() => Settings.openWifi()} />
       </View>
@@ -133,7 +156,7 @@ type Props = {
 ```javascript
 //Example: Open wifi setting
 
-import NetworkState, { Settings } from "react-native-network-state"
+import NetworkState, { Settings } from 'react-native-network-state'
 
 Settings.openWifi()
 ```

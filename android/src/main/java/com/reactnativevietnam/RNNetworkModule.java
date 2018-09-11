@@ -4,11 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Arguments;
@@ -42,10 +42,11 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
                     params.putBoolean("isConnected", v.booleanValue());
                     params.putString("type", type);
                     params.putBoolean("isFast", isFast);
-
                     sendEvent("networkChanged", params);
                 }
             }, intentFilter);
+        } else {
+            Log.e("RNNetworkError", "Missing context");
         }
     }
 
@@ -70,11 +71,16 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
         try {
             ConnectivityManager manager = (ConnectivityManager) getReactApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = manager.getActiveNetworkInfo();
-            Boolean isConnected = netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
-            Boolean isFast = isConnected ? NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype()) : false;
-            constants.put("isFast", isFast);
-            constants.put("type", netInfo.getTypeName());
-            constants.put("isConnected", isConnected );
+            Boolean isFast = netInfo != null ? NetworkReceiver.isConnectionFast(netInfo.getType(), netInfo.getSubtype()) : false;
+            if (netInfo != null && netInfo.isConnected() && netInfo.isAvailable()) {
+                constants.put("isConnected", true);
+                constants.put("type", netInfo.getTypeName());
+                constants.put("isFast", isFast);
+            } else {
+                constants.put("isConnected", false);
+                constants.put("type", netInfo != null ? netInfo.getTypeName() :  "unknown");
+                constants.put("isFast", isFast);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
