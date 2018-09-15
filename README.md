@@ -8,7 +8,7 @@
 - [x] Support `onConnected`, `onDisconnected` callback
 - [x] Highly customizable UI
 - [x] Open Wifi setting
-- [x] Android 8.0+ supported
+- [x] Android 8+ supported
 
 ## Demo
 
@@ -21,23 +21,6 @@
 or
 
 `$ yarn add react-native-network-state`
-
-then put this line into your `package.json`
-
-```
-// package.json
-
-{
-  ...
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
-    "postinstall": "node node_modules/react-native-network-state/fixAndroid.js", // THIS LINE
-    ...
-  },
-  ...
-}
-```
 
 ### Automatic installation
 
@@ -88,70 +71,9 @@ then put this line into your `package.json`
 1.  Insert these lines to `AndroidManifest.xml`
 
         ```
-        // ask permissions
+        // add this permissions
         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-        <application ...>
-            ...
-            // insert these lines
-            <receiver android:name="com.reactnativevietnam.NetworkReceiver" >
-                <intent-filter>
-                    <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                </intent-filter>
-            </receiver>
-
-            <!-- FIX 18:9 screen ratio -->
-            <meta-data android:name="android.max_aspect" android:value="2.1" />
-        </application>
         ```
-
-2.  Upgrade to build tool `3.1.3`:
-
-        ```
-        // android/build.gradle
-
-        buildscript {
-            repositories {
-                google() // INSERT THIS LINE BEFORE jcenter
-                jcenter()
-            }
-            dependencies {
-                classpath 'com.android.tools.build:gradle:3.1.3' // INSERT THIS LINE
-                ...
-            }
-            ...
-        }
-        allprojects {
-            repositories {
-                mavenLocal()
-                google() // INSERT THIS LINE BEFORE jcenter
-                jcenter()
-                maven {
-                    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-                    url "$rootDir/../node_modules/react-native/android"
-                }
-            }
-        }
-        ```
-
-3.  Upgrade gradle to `4.4`
-
-    ```
-    // android/gradle/wrapper/gradle-wrapper.properties
-
-    distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip
-    ```
-
-4.  Upgrade compileSdkVersion to `27`, buildToolsVersion to `27.0.3`, targetSdkVersion to 27
-
-5.  Run script fix android module gradle
-
-```
-node node_modules/react-native-network-state/fixAndroid.js
-```
-
-#### Fix Android Gradle
 
 ## Usage
 
