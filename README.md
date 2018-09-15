@@ -8,7 +8,7 @@
 - [x] Support `onConnected`, `onDisconnected` callback
 - [x] Highly customizable UI
 - [x] Open Wifi setting
-- [ ] Android 8.0+ => Bug
+- [x] Android 8.0+ supported
 
 ## Demo
 
