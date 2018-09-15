@@ -22,6 +22,23 @@ or
 
 `$ yarn add react-native-network-state`
 
+then put this line into your `package.json`
+
+```
+// package.json
+
+{
+  ...
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "postinstall": "node node_modules/react-native-network-state/fixAndroid.js", // THIS LINE
+    ...
+  },
+  ...
+}
+```
+
 ### Automatic installation
 
 `$ react-native link react-native-network-state`
@@ -95,11 +112,26 @@ or
         // android/build.gradle
 
         buildscript {
+            repositories {
+                google() // INSERT THIS LINE BEFORE jcenter
+                jcenter()
+            }
             dependencies {
-                classpath 'com.android.tools.build:gradle:3.1.3' // HERE
+                classpath 'com.android.tools.build:gradle:3.1.3' // INSERT THIS LINE
                 ...
             }
             ...
+        }
+        allprojects {
+            repositories {
+                mavenLocal()
+                google() // INSERT THIS LINE BEFORE jcenter
+                jcenter()
+                maven {
+                    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+                    url "$rootDir/../node_modules/react-native/android"
+                }
+            }
         }
         ```
 
