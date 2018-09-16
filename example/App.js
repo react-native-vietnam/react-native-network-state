@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, PixelRatio } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, PixelRatio, Switch } from 'react-native';
 import NetworkState, { Settings } from 'react-native-network-state';
 
 const instructions = Platform.select({
@@ -18,19 +18,42 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
   state = {
+    layoutOne: true,
     connected: Settings.isConnected
   };
+
+  renderNoInternet() {
+    return (
+      <View>
+        <Image source={require('./unicorn.png')} style={styles.unicorn} />
+        <Text style={styles.welcome}>No internet available</Text>
+      </View>
+    );
+  }
+
+  renderNormal() {
+    return (
+      <View>
+        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.instructions}>To get started, edit App.js</Text>
+        <Text style={styles.instructions}>{instructions}</Text>
+      </View>
+    );
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        {this.state.connected ? null : (
-          <Image source={require('./unicorn.png')} style={styles.unicorn} />
-        )}
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <View style={styles.switch}>
+          <Text>Change style: </Text>
+          <Switch
+            value={this.state.layoutOne}
+            onValueChange={() => this.setState(prev => ({ layoutOne: !prev.layoutOne }))}
+          />
+        </View>
+        {this.state.connected ? this.renderNormal() : this.renderNoInternet()}
         <NetworkState
+          visible={!this.state.layoutOne}
           onDisconnected={() => this.setState({ connected: false })}
           onConnected={() => this.setState({ connected: true })}
         />
@@ -59,5 +82,10 @@ const styles = StyleSheet.create({
   unicorn: {
     width: 150 * PixelRatio.getFontScale(),
     height: 150 * PixelRatio.getFontScale()
+  },
+  switch: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
