@@ -1,6 +1,6 @@
 {
   "name": "react-native-network-state",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Easy control network status in React Native",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,11 @@
     "fbjs": "*"
   },
   "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-rallycoding": "^3.2.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-native": "^3.3.0",
     "flow-bin": "^0.78.0"
   }
 }

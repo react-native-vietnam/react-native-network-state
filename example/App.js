@@ -6,21 +6,31 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, PixelRatio, Switch } from 'react-native';
-import NetworkState, { Settings } from 'react-native-network-state';
+import React, { Component } from 'react'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  PixelRatio,
+  Switch
+} from 'react-native'
+import NetworkState, { Settings } from 'react-native-network-state'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu'
-});
+  android:
+    'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu'
+})
 
-type Props = {};
+type Props = {}
 export default class App extends Component<Props> {
   state = {
     layoutOne: true,
     connected: Settings.isConnected
-  };
+  }
 
   renderNoInternet() {
     return (
@@ -28,7 +38,7 @@ export default class App extends Component<Props> {
         <Image source={require('./unicorn.png')} style={styles.unicorn} />
         <Text style={styles.welcome}>No internet available</Text>
       </View>
-    );
+    )
   }
 
   renderNormal() {
@@ -38,7 +48,7 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
-    );
+    )
   }
 
   render() {
@@ -48,17 +58,20 @@ export default class App extends Component<Props> {
           <Text>Change style: </Text>
           <Switch
             value={this.state.layoutOne}
-            onValueChange={() => this.setState(prev => ({ layoutOne: !prev.layoutOne }))}
+            onValueChange={() =>
+              this.setState(prev => ({ layoutOne: !prev.layoutOne }))
+            }
           />
         </View>
         {this.state.connected ? this.renderNormal() : this.renderNoInternet()}
         <NetworkState
+          style={{ ...Platform.select({ ios: { marginTop: 20 } }) }}
           visible={!this.state.layoutOne}
           onDisconnected={() => this.setState({ connected: false })}
           onConnected={() => this.setState({ connected: true })}
         />
       </View>
-    );
+    )
   }
 }
 
@@ -88,4 +101,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
-});
+})
