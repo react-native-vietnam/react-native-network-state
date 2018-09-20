@@ -31,9 +31,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class RNNetworkModule extends ReactContextBaseJavaModule {
     private Boolean isConnected = false;
+    private  ReactApplicationContext mContext = null;
     public RNNetworkModule(ReactApplicationContext reactContext) {
         super(reactContext);
-
+        mContext = reactContext;
         ReactiveNetwork
                 .observeInternetConnectivity()
                 .subscribeOn(Schedulers.io())
@@ -45,7 +46,7 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
                             return;
                         }
                         isConnected = mIsConnected;
-                        ConnectivityManager manager = (ConnectivityManager) getReactApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                        ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
                         NetworkInfo netInfo = manager.getActiveNetworkInfo();
                         Boolean isFast = netInfo != null ? RNNetworkModule.isConnectionFast(netInfo.getType(), netInfo.getSubtype()) : false;
                         String type = netInfo != null ? netInfo.getTypeName() : "unkown";
@@ -69,8 +70,8 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        if (intent.resolveActivity(getReactApplicationContext().getPackageManager()) != null) {
-            getReactApplicationContext().startActivity(intent);
+        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+            mContext.startActivity(intent);
         }
     }
 
@@ -79,8 +80,8 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
         UiThreadUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ReactApplication application = (ReactApplication)getReactApplicationContext().getCurrentActivity().getApplication();
-                application.getReactNativeHost().getReactInstanceManager().recreateReactContextInBackground();
+                ReactApplication app = (ReactApplication)mContext.getCurrentActivity().getApplication();
+                app.getReactNativeHost().getReactInstanceManager().recreateReactContextInBackground();
             }
         });
     }
@@ -89,7 +90,7 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         try {
-            ConnectivityManager manager = (ConnectivityManager) getReactApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = manager.getActiveNetworkInfo();
             Boolean isFast = netInfo != null ? RNNetworkModule.isConnectionFast(netInfo.getType(), netInfo.getSubtype()) : false;
             if (netInfo != null && netInfo.isConnected() && netInfo.isAvailable()) {
@@ -108,8 +109,8 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {
-        if (getReactApplicationContext() != null) {
-            getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+        if (mContext != null) {
+            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
         }
     }
 

@@ -14,6 +14,7 @@
   NetworkStatus prevStatus;
   NSTimer *timer;
 }
+@synthesize bridge = _bridge;
 - (dispatch_queue_t)methodQueue
 {
   return dispatch_get_main_queue();
@@ -78,5 +79,7 @@ RCT_EXPORT_METHOD(openWifi) {
            @"isFast": isConnected ? @YES : @NO
            };
 }
-
+RCT_EXPORT_METHOD(reload){
+  [_bridge reload];
+}
 @end
