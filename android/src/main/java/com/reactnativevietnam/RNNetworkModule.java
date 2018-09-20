@@ -109,7 +109,7 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {
-        if (mContext != null) {
+        if (mContext != null && mContext.hasActiveCatalystInstance()) {
             mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
         }
     }
