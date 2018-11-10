@@ -109,15 +109,17 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {
-        if (mContext != null && mContext.hasActiveCatalystInstance()) {
-            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+        if (mContext == null || !mContext.hasActiveCatalystInstance()) {
+            return;
         }
+        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
 
     public static boolean isConnectionFast(int type, int subType) {
         if (type == ConnectivityManager.TYPE_WIFI) {
             return true;
-        } else if (type == ConnectivityManager.TYPE_MOBILE) {
+        }
+        if (type == ConnectivityManager.TYPE_MOBILE) {
             switch (subType) {
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
                     return false; // ~ 50-100 kbps
@@ -158,8 +160,7 @@ public class RNNetworkModule extends ReactContextBaseJavaModule {
                 default:
                     return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 }
