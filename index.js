@@ -1,17 +1,15 @@
 //@flow
 
-import React from "react"
+import React from 'react'
 import {
   View,
   Text,
   TouchableOpacity,
-  NetInfo,
   ViewProperties,
   StyleSheet,
   NativeModules,
-  NativeEventEmitter,
-  Platform
-} from "react-native"
+  NativeEventEmitter
+} from 'react-native'
 
 type Props = {
   visible?: boolean,
@@ -39,17 +37,17 @@ type NetworkData = {
 export const Settings = NativeModules.RNNetworkState
 const RNNetworkStateEventEmitter = new NativeEventEmitter(Settings)
 
-export default class NetworkState extends React.PureComponent<Props> {
+export default class NetworkState extends React.PureComponent<Props, State> {
   static defaultProps = {
     visible: true,
     debound: 1500,
-    txtConnected: "Connected",
-    txtDisconnected: "No Internet Connection",
+    txtConnected: 'Connected',
+    txtDisconnected: 'No Internet Connection',
     onConnected: () => {},
     onDisconnected: () => {}
   }
 
-  state: State = {
+  state = {
     shouldVisible: !Settings.isConnected,
     isConnected: Settings.isConnected,
     type: Settings.type,
@@ -64,10 +62,12 @@ export default class NetworkState extends React.PureComponent<Props> {
 
     const { onConnected, onDisconnected } = this.props
     const { isConnected, type, isFast } = Settings
-    isConnected ? onConnected({ isConnected, type, isFast }) : onDisconnected({ isConnected, type, isFast })
+    isConnected
+      ? onConnected({ isConnected, type, isFast })
+      : onDisconnected({ isConnected, type, isFast })
 
     this._listener = RNNetworkStateEventEmitter.addListener(
-      "networkChanged",
+      'networkChanged',
       (data: NetworkData) => {
         if (this.state.isConnected !== data.isConnected) {
           data.isConnected ? onConnected(data) : onDisconnected(data)
@@ -78,6 +78,7 @@ export default class NetworkState extends React.PureComponent<Props> {
   }
 
   componentWillUnmount() {
+    this._TIMEOUT && clearTimeout(this._TIMEOUT)
     this._listener.remove()
   }
 
@@ -119,21 +120,21 @@ export default class NetworkState extends React.PureComponent<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0
   },
   txtSuccess: {
     paddingVertical: 5,
-    color: "#fff",
-    backgroundColor: "#4caf50",
-    textAlign: "center"
+    color: '#fff',
+    backgroundColor: '#4caf50',
+    textAlign: 'center'
   },
   txtError: {
     paddingVertical: 5,
-    color: "#fff",
-    backgroundColor: "#f44336",
-    textAlign: "center"
+    color: '#fff',
+    backgroundColor: '#f44336',
+    textAlign: 'center'
   }
 })
