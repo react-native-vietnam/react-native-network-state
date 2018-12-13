@@ -89,7 +89,11 @@ export default class YourView extends React.PureComponent {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>This is Your View</Text>
-        <NetworkState onDisconnected={() => Settings.openWifi()} />
+        <NetworkState
+          style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
+          onConnected={() => console.log('connected')}
+          onDisconnected={() => Settings.openWifi()}
+        />
       </View>
     )
   }

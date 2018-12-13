@@ -20,7 +20,7 @@ type Props = {
   styleDisconnected?: Object | Number,
   onConnected?: Function,
   onDisconnected?: Function,
-  ...ViewProperties
+  style?: number | Object | Array<number | Object>
 }
 
 type State = {
@@ -103,7 +103,7 @@ export default class NetworkState extends React.PureComponent<Props, State> {
       return <View />
     }
     return (
-      <View style={styles.container} {...viewProps}>
+      <View {...viewProps}>
         <Text
           style={[
             this.state.isConnected ? styles.txtSuccess : styles.txtError,
@@ -119,12 +119,6 @@ export default class NetworkState extends React.PureComponent<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0
-  },
   txtSuccess: {
     paddingVertical: 5,
     color: '#fff',
