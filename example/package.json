@@ -7,15 +7,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "16.5.0",
-    "react-native": "0.57.0",
-    "react-native-network-state": "https://github.com/react-native-vietnam/react-native-network-state.git"
+    "react": "16.6.0-alpha.8af6728",
+    "react-native": "0.57.4",
+    "react-native-network-state": "^1.1.2"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
-    "metro-react-native-babel-preset": "0.45.3",
-    "react-test-renderer": "16.5.0"
+    "metro-react-native-babel-preset": "0.49.0",
+    "react-test-renderer": "16.6.0-alpha.8af6728"
   },
   "jest": {
     "preset": "react-native"

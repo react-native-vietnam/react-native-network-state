@@ -5,3 +5,4 @@ local_example
 .gitattributes
 dev
 *.keystore
+package-lock.json
