@@ -58,7 +58,7 @@
                          @"type": type,
                          @"isFast": isConnected ? @YES : @NO
                         };
-  if([self bridge] == nil || !hasListener) {
+  if(!hasListener) {
     return;
   }
   [self sendEventWithName:@"networkChanged" body:data];
