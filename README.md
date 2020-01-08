@@ -4,7 +4,7 @@
 
 ## Features
 
-- [x] Detect network connection instancely
+- [x] Detect network connection instantly
 - [x] Support `onConnected`, `onDisconnected` callback
 - [x] Highly customizable UI
 - [x] Open Wifi setting
@@ -57,7 +57,7 @@ or
 
 #### iOS
 
-1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images bellow:
+1.  Add `SystemConfiguration.framework` to your `Linked Frameworks and Libraries`, see images below:
 
     <p>1.1</p>
 
@@ -115,7 +115,7 @@ type Props = {
 }
 ```
 
-## Settings Utils (iOS bellow 10 can open Wifi setting, equal or greater than 10 will open general settings)
+## Settings Utils (iOS below 10 can open Wifi setting, equal or greater than 10 will open general settings)
 
 | Functions | iOS | Android |
 | --------- | :-: | :-----: |
