@@ -15,8 +15,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/react-native-vietnam/react-native-network-state.git", :tag => package['version']}
   s.source_files = "ios/**/*.{h,m}"
   s.framework    = 'SystemConfiguration'
-  s.requires_arc = true
 
-  s.dependency "React"
+  s.dependency 'React'
 
 end

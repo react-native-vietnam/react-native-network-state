@@ -4,8 +4,6 @@ import React from 'react'
 import {
   View,
   Text,
-  TouchableOpacity,
-  ViewProperties,
   StyleSheet,
   NativeModules,
   NativeEventEmitter
