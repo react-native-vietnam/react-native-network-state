@@ -1,8 +1,1 @@
-example
-local_example
-.vscode
-.gitignore
-.gitattributes
-dev
-*.keystore
-package-lock.json
+example/
