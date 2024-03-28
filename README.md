@@ -1,4 +1,4 @@
-# react-native-network-state
+# react-native-network-state-connect-internet
 
 [![NPM](https://nodei.co/npm/react-native-network-state.png)](https://nodei.co/npm/react-native-network-state/)
 
@@ -20,11 +20,11 @@
 
 or
 
-`$ yarn add react-native-network-state`
+`$ yarn add react-native-network-state-connect-internet`
 
 ### Automatic installation
 
-`$ react-native link react-native-network-state`
+`$ react-native link react-native-network-state-connect-internet`
 
 ### Manual installation
 
