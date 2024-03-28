@@ -37,6 +37,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
-    compile 'com.facebook.react:react-native:+'
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.annotation:annotation:1.0.2'
 }
